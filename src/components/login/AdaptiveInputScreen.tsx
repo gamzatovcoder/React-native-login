@@ -21,6 +21,7 @@ interface Props {
   requiredInput?: true;
   inputAttributes: TextInputProps;
   inputImage: 'user' | 'lock';
+  buttonText: string;
 }
 
 const AdaptiveInputScreen = ({
@@ -28,6 +29,7 @@ const AdaptiveInputScreen = ({
   mainButtonHandler,
   inputAttributes,
   inputImage,
+  buttonText,
 }: Props) => {
   const [isFocusedInput, setIsFocusedInput] = useState(false);
   const [inputValue, setInputValue] = useState<string>('');
@@ -71,7 +73,7 @@ const AdaptiveInputScreen = ({
         <View style={styles.bottomWrapper}>
           <PrivacyNotice />
           <MainButton
-            title="Продолжить"
+            title={buttonText}
             isActive={inputValue ? true : false}
             handler={mainButtonHandler}
           />

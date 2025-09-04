@@ -29,6 +29,7 @@ const InputIdScreen = () => {
         secureTextEntry: true,
         keyboardType: 'numeric',
       }}
+      buttonText={'Войти в приложение'}
     />
   );
 };

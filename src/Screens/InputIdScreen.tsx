@@ -17,6 +17,7 @@ const InputIdScreen = () => {
         secureTextEntry: true,
         keyboardType: 'numeric',
       }}
+      buttonText={'Продолжить'}
     />
   );
 };
