@@ -20,6 +20,10 @@ const InputIdScreen = () => {
     return () => backhandler.remove();
   });
 
+  const handleNext = () => {
+    navigation.navigate('TaBBarScreen');
+  };
+
   return (
     <AdaptiveInputScreen
       inputImage={'lock'}
@@ -30,6 +34,7 @@ const InputIdScreen = () => {
         keyboardType: 'numeric',
       }}
       buttonText={'Войти в приложение'}
+      mainButtonHandler={handleNext}
     />
   );
 };
