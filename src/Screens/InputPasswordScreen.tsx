@@ -21,7 +21,7 @@ const InputIdScreen = () => {
   });
 
   const handleNext = () => {
-    navigation.navigate('TaBBarScreen');
+    navigation.navigate('MainScreen');
   };
 
   return (

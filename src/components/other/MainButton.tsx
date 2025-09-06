@@ -1,15 +1,22 @@
-import { Button, Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, TextStyle } from 'react-native';
 
 interface Props {
   title: string;
   handler?: () => void;
-  isActive: boolean;
+  isActive?: boolean;
+  buttonStyles?: TextStyle;
 }
 
-const MainButton = ({ title, handler, isActive }: Props) => {
+const MainButton = ({ title, handler, isActive, buttonStyles }: Props) => {
   return (
     <Pressable onPress={isActive ? handler : null}>
-      <Text style={[styles.button, !isActive && styles.buttonNotActive]}>
+      <Text
+        style={[
+          styles.button,
+          !isActive && styles.buttonNotActive,
+          buttonStyles,
+        ]}
+      >
         {title}
       </Text>
     </Pressable>

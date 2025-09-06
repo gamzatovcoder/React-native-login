@@ -1,36 +1,56 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { cartTariff } from '../../constants/types';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setSelectedTariff } from '../../store/slices/selectedTariffSlice';
-const SelectionButton = (tariffData: cartTariff) => {
-  const tariff: cartTariff | null = useAppSelector(
-    state => state.selectedTariff.value,
+import CustomLoader from './CustomLoader';
+import useSelectTariff from '../../hooks/useSelectTariff';
+
+type Props = cartTariff & { handler?: () => void; index: number };
+
+const SelectionButton = ({ handler, index, ...tariffData }: Props) => {
+  const { isLoading, isSelected, selectTariff } = useSelectTariff(
+    index,
+    tariffData,
   );
 
-  const isSelectedTariff = (): boolean => {
-    return tariff?.tariffNumber === tariffData.tariffNumber;
-  };
-
-  const dispatch = useAppDispatch();
-  const selectTariff = () => {
-    dispatch(setSelectedTariff(tariffData));
-  };
-
   return (
-    <Pressable onPress={selectTariff}>
-      <Text style={[styles.button, isSelectedTariff() && styles.buttonActive]}>
-        {isSelectedTariff() ? 'Ваш тариф' : 'Подключить'}
-      </Text>
+    <Pressable onPress={handler ? handler : selectTariff}>
+      <View
+        style={[
+          styles.button,
+          isLoading
+            ? styles.buttonIsLoading
+            : isSelected
+            ? styles.buttonActive
+            : null,
+        ]}
+      >
+        {isLoading ? (
+          <CustomLoader />
+        ) : (
+          <Text style={styles.buttonText}>
+            {isSelected ? 'Ваш тариф' : 'Подключить'}
+          </Text>
+        )}
+      </View>
     </Pressable>
   );
 };
+
 const styles = StyleSheet.create({
   button: {
     paddingVertical: 9,
     paddingHorizontal: 28,
     backgroundColor: '#0097D6',
     borderRadius: 200,
+  },
+
+  buttonIsLoading: {
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+  },
+  buttonText: {
     fontSize: 12,
+    color: '#FFFFFF',
   },
   buttonActive: {
     backgroundColor: '#28C07A',

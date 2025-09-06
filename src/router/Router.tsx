@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStaticNavigation } from '@react-navigation/native';
 import InputIdScreen from '../Screens/InputIdScreen';
 import InputPasswordScreen from '../Screens/InputPasswordScreen';
-import TaBBarScreen from '../Screens/TabBarScreen';
+import MainScreen from '../Screens/MainScreen';
 import AvailableTariffsScreen from '../Screens/AvailableTariffsScreen';
 
 const RootStack = createNativeStackNavigator({
@@ -15,8 +15,8 @@ const RootStack = createNativeStackNavigator({
       screen: InputPasswordScreen,
       options: { headerShown: false },
     },
-    TaBBarScreen: {
-      screen: TaBBarScreen,
+    MainScreen: {
+      screen: MainScreen,
       options: { headerShown: false },
     },
     AvailableTariffsScreen: {

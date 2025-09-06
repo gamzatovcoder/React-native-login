@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
-import ModalPrivacy from './ModalPrivacy';
-
+import ModalPrivacy from '../other/ModalPrivacy';
+import { modalText } from '../../constants/modalText';
 const PrivacyNotice = () => {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
@@ -17,7 +17,12 @@ const PrivacyNotice = () => {
           <Text style={styles.modalButtun}>политикой конфидкнциальности</Text>
         </Pressable>
       </Text>
-      <ModalPrivacy isVisible={isVisibleModal} setIsVisible={handlerButton} />
+
+      <ModalPrivacy
+        text={modalText}
+        isVisible={isVisibleModal}
+        setIsVisible={handlerButton}
+      />
     </View>
   );
 };

@@ -1,7 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, StyleSheet } from 'react-native';
 
-const PhoneNumberScreen = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const BackButton = ({ children }: Props) => {
   const navigation = useNavigation();
 
   const backHandler = () => {
@@ -10,7 +14,7 @@ const PhoneNumberScreen = () => {
 
   return (
     <Pressable style={styles.wrapper} onPress={backHandler}>
-      <Image source={require('../../images/leftArrowWhite.png')} />
+      {children}
     </Pressable>
   );
 };
@@ -19,11 +23,11 @@ const styles = StyleSheet.create({
   wrapper: {
     width: 48,
     height: 48,
-    borderRadius: 16,
-    backgroundColor: '#E2E8F0',
+    borderRadius: '50%',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
 
-export default PhoneNumberScreen;
+export default BackButton;

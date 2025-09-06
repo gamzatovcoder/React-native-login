@@ -1,19 +1,19 @@
 import {
   Image,
-  KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TextInputProps,
   View,
+  Dimensions,
+  Keyboard,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import MainButton from './MainButton';
+import MainButton from '../other/MainButton';
 import PrivacyNotice from './PrivacyNotice';
-import ButtonBack from './buttonBack';
-import { useState } from 'react';
-import { featureFlags } from 'react-native-screens';
+import BackButton from './BackButton';
+import BackButtonExtension from '../Extensions/BackButton';
+import { useEffect, useState } from 'react';
 
 interface Props {
   isVisibleButtonBack?: true;
@@ -38,60 +38,103 @@ const AdaptiveInputScreen = ({
     setInputValue(text);
   };
 
+  const windowHeight = Dimensions.get('window').height;
+  // , { height: windowHeight }
   const inputImages = {
     user: require('../../images/user.png'),
     lock: require('../../images/lock.png'),
   };
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', e => {
+      setKeyboardHeight(e.endCoordinates.height);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardHeight(0);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
-    <KeyboardAvoidingView style={styles.screen} behavior="height">
-      <SafeAreaView style={styles.wrapper}>
-        <View style={styles.topWrapper}>
-          {isVisibleButtonBack && (
-            <View style={styles.backButton}>
-              <ButtonBack />
+    <View style={styles.screen}>
+      <ScrollView style={{ height: windowHeight }}>
+        <View style={{ height: windowHeight }}>
+          <View style={[styles.contentWrapper]}>
+            <View style={styles.topWrapper}>
+              {isVisibleButtonBack && (
+                <View style={styles.backButton}>
+                  <BackButtonExtension>
+                    <BackButton />
+                  </BackButtonExtension>
+                </View>
+              )}
+              <Image
+                style={styles.image}
+                source={require('../../images/logo.png')}
+              />
             </View>
-          )}
-          <Image source={require('../../images/logo.png')} />
+            <Text style={styles.title}>Очень домашний интернет</Text>
+            <Text style={styles.description}>
+              Войдите в систему, чтобы пользоваться всеми функциями приложения.
+            </Text>
+            <View
+              style={[
+                styles.inputWrapper,
+                isFocusedInput && styles.inputFocused,
+              ]}
+            >
+              <Image
+                style={styles.inputImage}
+                source={inputImages[inputImage]}
+              />
+              <TextInput
+                style={[styles.input]}
+                onFocus={() => setIsFocusedInput(true)}
+                onBlur={() => setIsFocusedInput(false)}
+                onChangeText={handleInputValue}
+                value={inputValue}
+                {...inputAttributes}
+              />
+            </View>
+            <View
+              style={[styles.bottomWrapper, { marginBottom: keyboardHeight }]}
+            >
+              <PrivacyNotice />
+              <MainButton
+                title={buttonText}
+                isActive={inputValue ? true : false}
+                handler={mainButtonHandler}
+              />
+            </View>
+          </View>
         </View>
-        <Text style={styles.title}>Очень домашний интернет</Text>
-        <Text style={styles.description}>
-          Войдите в систему, чтобы пользоваться всеми функциями приложения.
-        </Text>
-        <View
-          style={[styles.inputWrapper, isFocusedInput && styles.inputBorder]}
-        >
-          <Image style={styles.inputImage} source={inputImages[inputImage]} />
-          <TextInput
-            style={[styles.input, isFocusedInput && styles.inputFocused]}
-            onFocus={() => setIsFocusedInput(true)}
-            onBlur={() => setIsFocusedInput(false)}
-            onChangeText={handleInputValue}
-            value={inputValue}
-            {...inputAttributes}
-          />
-        </View>
-        <View style={styles.bottomWrapper}>
-          <PrivacyNotice />
-          <MainButton
-            title={buttonText}
-            isActive={inputValue ? true : false}
-            handler={mainButtonHandler}
-          />
-        </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 30,
     backgroundColor: '#F8F8F8',
   },
   wrapper: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#833b3bff',
+  },
+  contentWrapper: {
+    flex: 1,
+    paddingTop: 78,
+    paddingHorizontal: 30,
+    paddingBottom: 48,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   topWrapper: {
@@ -108,6 +151,9 @@ const styles = StyleSheet.create({
     left: 0,
     transform: [{ translateY: -24 }],
   },
+  image: {
+    marginBottom: 24,
+  },
   title: {
     fontSize: 20,
     marginBottom: 22,
@@ -121,9 +167,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     flexDirection: 'column',
-    borderColor: 'rgba(0,0,0,0)',
-    borderRadius: 15,
-    borderWidth: 4,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
   },
   inputImage: {
     position: 'absolute',
@@ -132,20 +178,17 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -7.5 }],
     zIndex: 2,
   },
+  inputFocused: {
+    borderColor: '#0097D6',
+    boxShadow: '0px 2px 10px 0px #00000026, 0px 0px 0px 4px #0097D640',
+  },
   input: {
     height: 54,
     width: '100%',
-    paddingLeft: 36,
-    borderWidth: 1,
+    paddingLeft: 39,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     fontSize: 16,
-  },
-  inputFocused: {
-    borderColor: '#0097D6',
-  },
-  inputBorder: {
-    borderColor: '#0097D640',
   },
 
   bottomWrapper: {

@@ -13,8 +13,7 @@ const InputIdScreen = () => {
       mainButtonHandler={handleNext}
       inputImage={'user'}
       inputAttributes={{
-        placeholder: 'ID',
-        secureTextEntry: true,
+        placeholder: 'Id',
         keyboardType: 'numeric',
       }}
       buttonText={'Продолжить'}

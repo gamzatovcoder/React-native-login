@@ -1,5 +1,5 @@
 export interface cartTariff {
-  tariffNumber: number;
+  tariffNumber: any;
   price: number;
   specifications: {
     speed: string | false;

@@ -1,7 +1,16 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { cartTariff } from '../../constants/types';
-import SelectionButton from './selectionButton';
-const CartTariff = ({ specifications, tariffNumber, price }: cartTariff) => {
+import SelectionButton from './SelectionButton';
+
+type Props = cartTariff & { handler?: () => void; index: number };
+
+const CartTariff = ({
+  specifications,
+  tariffNumber,
+  price,
+  handler,
+  index,
+}: Props) => {
   const specificationsList = [
     {
       name: 'speed',
@@ -20,11 +29,30 @@ const CartTariff = ({ specifications, tariffNumber, price }: cartTariff) => {
     },
   ];
 
+  const imageFrameList = [
+    {
+      id: 0,
+      image: require('../../images/frame.png'),
+    },
+    {
+      id: 1,
+      image: require('../../images/Frame2.png'),
+    },
+    {
+      id: 2,
+      image: require('../../images/Frame3.png'),
+    },
+    {
+      id: 3,
+      image: require('../../images/Frame4.png'),
+    },
+  ];
+
   return (
     <View style={styles.cart}>
       <Image
         style={styles.imageFrame}
-        source={require('../../images/frame.png')}
+        source={imageFrameList.find(item => item.id === index)?.image}
       />
       <View style={styles.numberTariffWrapper}>
         <Text style={styles.numberTariff}>Тариф {tariffNumber}</Text>
@@ -46,6 +74,8 @@ const CartTariff = ({ specifications, tariffNumber, price }: cartTariff) => {
           <Text style={styles.price}>{price}</Text> ₽/мес.
         </Text>
         <SelectionButton
+          index={index}
+          handler={handler}
           price={price}
           specifications={specifications}
           tariffNumber={tariffNumber}
