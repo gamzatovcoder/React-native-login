@@ -1,11 +1,13 @@
 import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native';
 import MainButton from '../other/MainButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 interface Props {
   text: string;
   isVisible: boolean;
   setIsVisible: () => void;
 }
+
 const ModalPrivacy = ({ text, isVisible, setIsVisible }: Props) => {
   return (
     <Modal transparent visible={isVisible} statusBarTranslucent>

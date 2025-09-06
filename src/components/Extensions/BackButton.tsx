@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
 interface Props {
   children: React.ReactNode;
@@ -8,12 +8,8 @@ interface Props {
 const BackButton = ({ children }: Props) => {
   const navigation = useNavigation();
 
-  const backHandler = () => {
-    navigation.goBack();
-  };
-
   return (
-    <Pressable style={styles.wrapper} onPress={backHandler}>
+    <Pressable style={styles.wrapper} onPress={navigation.goBack}>
       {children}
     </Pressable>
   );

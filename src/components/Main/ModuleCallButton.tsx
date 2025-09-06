@@ -9,11 +9,7 @@ interface Props {
 }
 
 const ModuleCallButton = ({ image, buttonText, modalText }: Props) => {
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
-
-  const handlerButton = () => {
-    setIsVisibleModal(prev => !prev);
-  };
+  const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
 
   const imageList = {
     userLock: require('../../images/userLock.png'),
@@ -29,7 +25,7 @@ const ModuleCallButton = ({ image, buttonText, modalText }: Props) => {
       <ModalPrivacy
         text={modalText}
         isVisible={isVisibleModal}
-        setIsVisible={handlerButton}
+        setIsVisible={() => setIsVisibleModal(false)}
       />
     </Pressable>
   );

@@ -8,13 +8,10 @@ import { useGetProductsQuery } from '../store/services/apiTariff';
 const AvailableTariffsScreen = () => {
   const { data, isLoading, isError } = useGetProductsQuery();
 
-  const dataList = data
+  const dataList: number[] = data
     ?.slice(0, 4)
     .map(({ id }) => id.length)
     .sort((a, b) => a - b);
-
-  if (isLoading) return <Text>Loading...</Text>;
-  if (isError) return <Text>Error...</Text>;
 
   return (
     <View style={styles.wrapper}>
@@ -29,21 +26,30 @@ const AvailableTariffsScreen = () => {
             <Text style={styles.title}>Доступные тарифы</Text>
           </View>
           <View style={styles.cartList}>
-            {dataList?.map((id, index) => {
-              return (
-                <CartTariff
-                  key={id}
-                  index={index}
-                  tariffNumber={id}
-                  price={id * 100}
-                  specifications={{
-                    speed: 'Скорость до 100 Мбит/с.',
-                    repair: id % 2 === 0 ? 'Сервис PRO' : false,
-                    tv: '500+ каналов IP TV',
-                  }}
-                />
-              );
-            })}
+            {isLoading ? (
+              <Text>Loading...</Text>
+            ) : isError ? (
+              <Text>Error...</Text>
+            ) : (
+              dataList?.map((id, index) => {
+                return (
+                  <CartTariff
+                    key={id}
+                    index={index}
+                    tarifData={{
+                      tariffNumber: id,
+                      price: id * 100,
+                      specifications: {
+                        speed: 'Скорость до 100 Мбит/с.',
+                        repair: id % 2 === 0 ? 'Сервис PRO' : false,
+                        tv: '500+ каналов IP TV',
+                      },
+                    }}
+                  />
+                );
+              })
+            )}
+            {}
           </View>
         </SafeAreaView>
       </ScrollView>

@@ -2,11 +2,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
 import ModalPrivacy from '../other/ModalPrivacy';
 import { modalText } from '../../constants/modalText';
-const PrivacyNotice = () => {
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
 
-  const handlerButton = () => {
-    setIsVisibleModal(prev => !prev);
+const PrivacyNotice = () => {
+  const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
+
+  const toggleModalVisibility = (): void => {
+    setIsVisibleModal(false);
   };
 
   return (
@@ -17,11 +18,10 @@ const PrivacyNotice = () => {
           <Text style={styles.modalButtun}>политикой конфидкнциальности</Text>
         </Pressable>
       </Text>
-
       <ModalPrivacy
         text={modalText}
         isVisible={isVisibleModal}
-        setIsVisible={handlerButton}
+        setIsVisible={toggleModalVisibility}
       />
     </View>
   );

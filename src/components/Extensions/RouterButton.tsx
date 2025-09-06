@@ -9,7 +9,7 @@ interface Props {
 const RouterButton = ({ route, children }: Props) => {
   const navigation = useNavigation();
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     navigation.navigate(route);
   };
 

@@ -9,11 +9,11 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
+import { useEffect, useState } from 'react';
 import MainButton from '../other/MainButton';
 import PrivacyNotice from './PrivacyNotice';
 import BackButton from './BackButton';
 import BackButtonExtension from '../Extensions/BackButton';
-import { useEffect, useState } from 'react';
 
 interface Props {
   isVisibleButtonBack?: true;
@@ -31,21 +31,15 @@ const AdaptiveInputScreen = ({
   inputImage,
   buttonText,
 }: Props) => {
-  const [isFocusedInput, setIsFocusedInput] = useState(false);
+  const [isFocusedInput, setIsFocusedInput] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-  const handleInputValue = (text: string) => {
+  const updateInputValue = (text: string): void => {
     setInputValue(text);
   };
 
-  const windowHeight = Dimensions.get('window').height;
-  // , { height: windowHeight }
-  const inputImages = {
-    user: require('../../images/user.png'),
-    lock: require('../../images/lock.png'),
-  };
-
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const windowHeight: number = Dimensions.get('window').height;
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', e => {
@@ -60,6 +54,11 @@ const AdaptiveInputScreen = ({
       hideSubscription.remove();
     };
   }, []);
+
+  const inputImages = {
+    user: require('../../images/user.png'),
+    lock: require('../../images/lock.png'),
+  };
 
   return (
     <View style={styles.screen}>
@@ -97,7 +96,7 @@ const AdaptiveInputScreen = ({
                 style={[styles.input]}
                 onFocus={() => setIsFocusedInput(true)}
                 onBlur={() => setIsFocusedInput(false)}
-                onChangeText={handleInputValue}
+                onChangeText={updateInputValue}
                 value={inputValue}
                 {...inputAttributes}
               />
@@ -147,19 +146,22 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: '50%',
     left: 0,
-    transform: [{ translateY: -24 }],
+    top: 0,
   },
   image: {
     marginBottom: 24,
   },
   title: {
     fontSize: 20,
+    fontWeight: 600,
     marginBottom: 22,
   },
   description: {
     fontSize: 12,
+    textAlign: 'center',
+    fontWeight: 400,
+
     color: '#8D8A95',
     marginBottom: 22,
   },

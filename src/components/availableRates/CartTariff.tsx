@@ -2,15 +2,15 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { cartTariff } from '../../constants/types';
 import SelectionButton from './SelectionButton';
 
-type Props = cartTariff & { handler?: () => void; index: number };
+type Props = {
+  handler?: () => void;
+  index: number;
+  tarifData: cartTariff;
+};
 
-const CartTariff = ({
-  specifications,
-  tariffNumber,
-  price,
-  handler,
-  index,
-}: Props) => {
+const CartTariff = ({ handler, index, tarifData }: Props) => {
+  const { price, specifications, tariffNumber } = tarifData;
+
   const specificationsList = [
     {
       name: 'speed',

@@ -6,34 +6,30 @@ const CustomLoader = () => {
   const rotateAnimSlow = useRef(new Animated.Value(0)).current; // медленное вращение
 
   useEffect(() => {
-    // Анимация для быстрого вращения
     Animated.loop(
       Animated.timing(rotateAnimFast, {
         toValue: 1,
-        duration: 1500, // быстрее
+        duration: 1500,
         easing: Easing.linear,
         useNativeDriver: true,
       }),
     ).start();
 
-    // Анимация для медленного вращения
     Animated.loop(
       Animated.timing(rotateAnimSlow, {
         toValue: 1,
-        duration: 1000, // медленнее
+        duration: 1000,
         easing: Easing.linear,
         useNativeDriver: true,
       }),
     ).start();
 
-    // Очистка при размонтировании
     return () => {
       rotateAnimFast.stopAnimation();
       rotateAnimSlow.stopAnimation();
     };
   }, [rotateAnimFast, rotateAnimSlow]);
 
-  // Интерполяция для быстрых и медленных вращений
   const spinFast = rotateAnimFast.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],

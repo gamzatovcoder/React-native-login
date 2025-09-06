@@ -13,8 +13,8 @@ const MainButton = ({ title, handler, isActive, buttonStyles }: Props) => {
       <Text
         style={[
           styles.button,
-          !isActive && styles.buttonNotActive,
           buttonStyles,
+          !isActive && styles.buttonNotActive,
         ]}
       >
         {title}

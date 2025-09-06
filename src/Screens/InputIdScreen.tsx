@@ -4,7 +4,7 @@ import AdaptiveInputScreen from '../components/login/AdaptiveInputScreen';
 const InputIdScreen = () => {
   const navigation = useNavigation();
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     navigation.navigate('InputPasswordScreen');
   };
 

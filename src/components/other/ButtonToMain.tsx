@@ -4,12 +4,12 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 const ButtonToMain = () => {
   const navigation = useNavigation();
 
-  const handleNext = () => {
+  const navigateTo = (): void => {
     navigation.navigate('MainScreen');
   };
 
   return (
-    <Pressable onPress={handleNext}>
+    <Pressable onPress={navigateTo}>
       <View style={styles.button}>
         <Image source={require('../../images/home.png')} />
         <Text style={styles.buttonText}>Главная</Text>

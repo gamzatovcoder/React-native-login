@@ -1,38 +1,14 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
-  ScrollView,
-  Vibration,
-} from 'react-native';
-import { useAppSelector } from '../store/hooks';
-import { cartTariff } from '../constants/types';
-import CartTariff from '../components/availableRates/CartTariff';
+import { View, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
 import ButtonToMain from '../components/other/ButtonToMain';
 import RouterButton from '../components/Extensions/RouterButton';
 import ButtonToStart from '../components/other/ButtonToStart';
 import ModuleCallButton from '../components/Main/ModuleCallButton';
 import { modalText } from '../constants/modalText';
-import { useGetProductsQuery } from '../store/services/apiTariff';
-import { useNavigation } from '@react-navigation/native';
+
+import CurrentCartTariff from '../components/Main/CurrentCartTariff';
 
 const MainScreen = () => {
   const windowHeight = Dimensions.get('window').height;
-
-  const tariff: cartTariff | null = useAppSelector(
-    state => state.selectedTariff.value,
-  );
-
-  const navigation = useNavigation();
-
-  const handleNext = () => {
-    navigation.navigate('AvailableTariffsScreen');
-  };
-
-  const { data, isLoading, isError } = useGetProductsQuery();
-
-  const dataList = data?.slice(0, 1);
 
   return (
     <View style={[styles.screen]}>
@@ -48,36 +24,7 @@ const MainScreen = () => {
               </View>
             </View>
             <View style={styles.cartWrapper}>
-              {tariff ? (
-                <CartTariff
-                  index={0}
-                  handler={handleNext}
-                  price={tariff?.price}
-                  specifications={tariff.specifications}
-                  tariffNumber={tariff.tariffNumber}
-                />
-              ) : dataList ? (
-                dataList?.map(({ id }) => {
-                  return (
-                    <CartTariff
-                      key={id}
-                      index={0}
-                      handler={handleNext}
-                      tariffNumber={id.length}
-                      price={id.length * 100}
-                      specifications={{
-                        speed: 'Скорость до 100 Мбит/с.',
-                        repair: id.length % 2 === 0 ? 'Сервис PRO' : false,
-                        tv: '500+ каналов IP TV',
-                      }}
-                    />
-                  );
-                })
-              ) : isLoading ? (
-                <Text>Loading...</Text>
-              ) : isError ? (
-                <Text>Error...</Text>
-              ) : null}
+              <CurrentCartTariff />
             </View>
           </View>
           <View>
@@ -109,7 +56,6 @@ const MainScreen = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    // flex: 1,
     backgroundColor: '#F8F8F8',
   },
   container: {
@@ -142,7 +88,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   cartWrapper: {
-    alignItems: 'center',
     marginTop: 48,
   },
   descriptionList: {
