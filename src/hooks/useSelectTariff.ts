@@ -12,22 +12,23 @@ interface Return {
   selectTariff: () => void;
 }
 
-const useSelectTariff = (
-  indexTariff: number,
-  tariffData: cartTariff,
-): Return => {
+const useSelectTariff = (tariffData: cartTariff): Return => {
   const dispatch = useAppDispatch();
 
-  const isSelected = useAppSelector(
+  //выбран ли этот tariff
+  const isSelected: boolean = useAppSelector(
     state =>
       state.selectedTariff.value?.tariffNumber === tariffData.tariffNumber,
   );
 
+  //какой tariff загружается
   const indexTariffIsLoading: number | null = useAppSelector(
     state => state.selectedTariff.indexTariffIsLoading,
   );
+  //загружается ли этот tariff
+  const isLoading = indexTariffIsLoading === tariffData.tariffNumber;
 
-  const isLoading = indexTariffIsLoading === indexTariff;
+  // имитация загрузки через setTimeout с последуюшим сохранением
   useEffect(() => {
     let loadingTime: number | undefined;
     if (isLoading) {
@@ -43,8 +44,9 @@ const useSelectTariff = (
     };
   }, [dispatch, isLoading, tariffData]);
 
-  const selectTariff = () => {
-    dispatch(setIsLoadingByIndex(indexTariff));
+  //функция выбора тарифа
+  const selectTariff = (): void => {
+    dispatch(setIsLoadingByIndex(tariffData.tariffNumber));
   };
 
   return { isLoading, isSelected, selectTariff };

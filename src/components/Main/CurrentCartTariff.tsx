@@ -18,6 +18,8 @@ const CurrentCartTariff = () => {
 
   const { data, isLoading, isError } = useGetProductsQuery();
 
+  // я использовал бесплатное api в котором нет всех данных для карточки тарифа,
+  // так что я создаю данные на основе id из полученных обьектов
   const tariffId = data?.[0]?.id;
 
   return (
@@ -29,6 +31,7 @@ const CurrentCartTariff = () => {
       ) : currentTariff ? (
         <CartTariff index={0} handler={navigateTo} tarifData={currentTariff} />
       ) : (
+        //данные создаются на основе id
         <CartTariff
           key={tariffId}
           index={0}

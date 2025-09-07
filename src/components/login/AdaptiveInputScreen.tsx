@@ -32,14 +32,18 @@ const AdaptiveInputScreen = ({
   buttonText,
 }: Props) => {
   const [isFocusedInput, setIsFocusedInput] = useState<boolean>(false);
+
+  //если в input есть текст то сделать кнгопку активной
   const [inputValue, setInputValue] = useState<string>('');
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const updateInputValue = (text: string): void => {
     setInputValue(text);
   };
 
   const windowHeight: number = Dimensions.get('window').height;
+
+  //поднять кнопку при вызове клавиатуры
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', e => {
@@ -97,7 +101,6 @@ const AdaptiveInputScreen = ({
                 onFocus={() => setIsFocusedInput(true)}
                 onBlur={() => setIsFocusedInput(false)}
                 onChangeText={updateInputValue}
-                value={inputValue}
                 {...inputAttributes}
               />
             </View>

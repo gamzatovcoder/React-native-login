@@ -29,7 +29,7 @@ const CartTariff = ({ handler, index, tarifData }: Props) => {
     },
   ];
 
-  const imageFrameList = [
+  const imageIndicatorList = [
     {
       id: 0,
       image: require('../../images/frame.png'),
@@ -52,7 +52,7 @@ const CartTariff = ({ handler, index, tarifData }: Props) => {
     <View style={styles.cart}>
       <Image
         style={styles.imageFrame}
-        source={imageFrameList.find(item => item.id === index)?.image}
+        source={imageIndicatorList.find(item => item.id === index)?.image}
       />
       <View style={styles.numberTariffWrapper}>
         <Text style={styles.numberTariff}>Тариф {tariffNumber}</Text>
@@ -74,7 +74,6 @@ const CartTariff = ({ handler, index, tarifData }: Props) => {
           <Text style={styles.price}>{price}</Text> ₽/мес.
         </Text>
         <SelectionButton
-          index={index}
           handler={handler}
           price={price}
           specifications={specifications}

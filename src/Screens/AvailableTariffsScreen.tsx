@@ -8,6 +8,8 @@ import { useGetProductsQuery } from '../store/services/apiTariff';
 const AvailableTariffsScreen = () => {
   const { data, isLoading, isError } = useGetProductsQuery();
 
+  // я использовал бесплатное api в котором нет всех данных для карточки тарифа,
+  // так что я создаю данные на основе id из полученных обьектов
   const dataList: number[] = data
     ?.slice(0, 4)
     .map(({ id }) => id.length)
@@ -31,11 +33,11 @@ const AvailableTariffsScreen = () => {
             ) : isError ? (
               <Text>Error...</Text>
             ) : (
+              //данные создаются на основе id
               dataList?.map((id, index) => {
                 return (
                   <CartTariff
                     key={id}
-                    index={index}
                     tarifData={{
                       tariffNumber: id,
                       price: id * 100,

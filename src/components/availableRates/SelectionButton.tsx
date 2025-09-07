@@ -2,13 +2,15 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { cartTariff } from '../../constants/types';
 import CustomLoader from './CustomLoader';
 import useSelectTariff from '../../hooks/useSelectTariff';
+import { useAppSelector } from '../../store/hooks';
 
-type Props = cartTariff & { handler?: () => void; index: number };
+type Props = cartTariff & { handler?: () => void };
 
-const SelectionButton = ({ handler, index, ...tariffData }: Props) => {
-  const { isLoading, isSelected, selectTariff } = useSelectTariff(
-    index,
-    tariffData,
+const SelectionButton = ({ handler, ...tariffData }: Props) => {
+  const { isLoading, isSelected, selectTariff } = useSelectTariff(tariffData);
+
+  const tariff: number | null = useAppSelector(
+    state => state.selectedTariff.value?.tariffNumber,
   );
 
   return (
@@ -28,6 +30,9 @@ const SelectionButton = ({ handler, index, ...tariffData }: Props) => {
         ) : (
           <Text style={styles.buttonText}>
             {isSelected ? 'Ваш тариф' : 'Подключить'}
+            {tariffData.tariffNumber}
+
+            {tariff}
           </Text>
         )}
       </View>
