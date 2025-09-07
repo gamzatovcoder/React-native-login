@@ -38,6 +38,7 @@ const AvailableTariffsScreen = () => {
                 return (
                   <CartTariff
                     key={id}
+                    index={index}
                     tarifData={{
                       tariffNumber: id,
                       price: id * 100,

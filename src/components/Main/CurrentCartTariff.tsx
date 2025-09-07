@@ -22,6 +22,15 @@ const CurrentCartTariff = () => {
   // так что я создаю данные на основе id из полученных обьектов
   const tariffId = data?.[0]?.id;
 
+  const tariffList: number[] = data
+    ?.slice(0, 4)
+    .map(({ id }) => id.length)
+    .sort((a, b) => a - b);
+
+  const indexTariff = tariffList?.findIndex(
+    id => id === currentTariff?.tariffNumber,
+  );
+
   return (
     <View style={styles.cartWrapper}>
       {isLoading ? (
@@ -34,7 +43,7 @@ const CurrentCartTariff = () => {
         //данные создаются на основе id
         <CartTariff
           key={tariffId}
-          index={0}
+          index={indexTariff === -1 ? indexTariff : 0}
           handler={navigateTo}
           tarifData={{
             tariffNumber: tariffId.length,

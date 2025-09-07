@@ -2,16 +2,11 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { cartTariff } from '../../constants/types';
 import CustomLoader from './CustomLoader';
 import useSelectTariff from '../../hooks/useSelectTariff';
-import { useAppSelector } from '../../store/hooks';
 
 type Props = cartTariff & { handler?: () => void };
 
 const SelectionButton = ({ handler, ...tariffData }: Props) => {
   const { isLoading, isSelected, selectTariff } = useSelectTariff(tariffData);
-
-  const tariff: number | null = useAppSelector(
-    state => state.selectedTariff.value?.tariffNumber,
-  );
 
   return (
     <Pressable onPress={handler ? handler : selectTariff}>
