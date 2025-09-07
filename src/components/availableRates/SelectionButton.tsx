@@ -30,9 +30,6 @@ const SelectionButton = ({ handler, ...tariffData }: Props) => {
         ) : (
           <Text style={styles.buttonText}>
             {isSelected ? 'Ваш тариф' : 'Подключить'}
-            {tariffData.tariffNumber}
-
-            {tariff}
           </Text>
         )}
       </View>
