@@ -38,12 +38,16 @@ const CurrentCartTariff = () => {
       ) : isError ? (
         <Text>Error...</Text>
       ) : currentTariff ? (
-        <CartTariff index={0} handler={navigateTo} tarifData={currentTariff} />
+        <CartTariff
+          index={indexTariff !== -1 ? indexTariff : 0}
+          handler={navigateTo}
+          tarifData={currentTariff}
+        />
       ) : (
         //данные создаются на основе id
         <CartTariff
           key={tariffId}
-          index={indexTariff === -1 ? indexTariff : 0}
+          index={0}
           handler={navigateTo}
           tarifData={{
             tariffNumber: tariffId.length,
