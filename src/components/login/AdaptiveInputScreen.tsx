@@ -18,7 +18,7 @@ import BackButtonExtension from '../Extensions/BackButton';
 interface Props {
   isVisibleButtonBack?: true;
   mainButtonHandler?: () => void;
-  requiredInput?: true;
+  requiredInput?: boolean;
   inputAttributes: TextInputProps;
   inputImage: 'user' | 'lock';
   buttonText: string;

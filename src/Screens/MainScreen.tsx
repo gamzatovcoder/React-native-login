@@ -4,8 +4,8 @@ import RouterButton from '../components/Extensions/RouterButton';
 import ButtonToStart from '../components/other/ButtonToStart';
 import ModuleCallButton from '../components/Main/ModuleCallButton';
 import { modalText } from '../constants/modalText';
-
 import CurrentCartTariff from '../components/Main/CurrentCartTariff';
+import { tabBar } from '../constants/styleConstants';
 
 const MainScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -13,7 +13,9 @@ const MainScreen = () => {
   return (
     <View style={[styles.screen]}>
       <ScrollView>
-        <View style={[styles.wrapper, { height: windowHeight }]}>
+        <View
+          style={[styles.wrapper, { height: windowHeight - tabBar.height }]}
+        >
           <View>
             <View style={[styles.topBlock, styles.container]}>
               <Text style={styles.title}>Главная</Text>
@@ -44,9 +46,6 @@ const MainScreen = () => {
                 <Text style={styles.version}>11.0003.503</Text>
               </View>
             </View>
-            <View style={[styles.tabBar, styles.container]}>
-              <ButtonToMain />
-            </View>
           </View>
         </View>
       </ScrollView>
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   wrapper: {
-    backgroundColor: '#F8F8F8ш',
+    backgroundColor: '#F8F8F8',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -108,19 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'medium',
     color: '#676472',
-  },
-  tabBar: {
-    height: 92,
-    backgroundColor: '#F8F8F8',
-
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingTop: 8,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-
-    boxShadow:
-      ' 0px -1px 2px 0px #A1A1A11A, 0px -3px 3px 0px #A1A1A117, 0px -7px 4px 0px #A1A1A10D, 0px -12px 5px 0px #A1A1A103, 0px -20px 5px 0px #A1A1A100',
   },
 });
 

@@ -37,6 +37,7 @@ const AvailableTariffsScreen = () => {
               dataList?.map((id, index) => {
                 return (
                   <CartTariff
+                    buttonFor="selectTariff"
                     key={id}
                     index={index}
                     tarifData={{
@@ -52,7 +53,6 @@ const AvailableTariffsScreen = () => {
                 );
               })
             )}
-            {}
           </View>
         </SafeAreaView>
       </ScrollView>
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginHorizontal: 'auto',
     width: '100%',
-    maxWidth: 328,
   },
   topBlock: {
     flexDirection: 'row',

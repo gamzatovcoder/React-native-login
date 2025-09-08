@@ -3,13 +3,11 @@ import { cartTariff } from '../../constants/types';
 import CustomLoader from './CustomLoader';
 import useSelectTariff from '../../hooks/useSelectTariff';
 
-type Props = cartTariff & { handler?: () => void };
-
-const SelectionButton = ({ handler, ...tariffData }: Props) => {
+const SelectionButton = (tariffData: cartTariff) => {
   const { isLoading, isSelected, selectTariff } = useSelectTariff(tariffData);
 
   return (
-    <Pressable onPress={handler ? handler : selectTariff}>
+    <Pressable onPress={selectTariff}>
       <View
         style={[
           styles.button,

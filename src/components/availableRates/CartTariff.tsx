@@ -1,14 +1,15 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { cartTariff } from '../../constants/types';
 import SelectionButton from './SelectionButton';
+import ViewAllTariffs from './ViewAllTariffs';
 
 type Props = {
-  handler?: () => void;
+  buttonFor: 'selectTariff' | 'viewAllTariff';
   index: number;
   tarifData: cartTariff;
 };
 
-const CartTariff = ({ handler, index, tarifData }: Props) => {
+const CartTariff = ({ buttonFor, index, tarifData }: Props) => {
   const { price, specifications, tariffNumber } = tarifData;
 
   const specificationsList = [
@@ -73,12 +74,15 @@ const CartTariff = ({ handler, index, tarifData }: Props) => {
         <Text style={styles.priceDescription}>
           <Text style={styles.price}>{price}</Text> ₽/мес.
         </Text>
-        <SelectionButton
-          handler={handler}
-          price={price}
-          specifications={specifications}
-          tariffNumber={tariffNumber}
-        />
+        {buttonFor === 'viewAllTariff' ? (
+          <ViewAllTariffs />
+        ) : (
+          <SelectionButton
+            price={price}
+            specifications={specifications}
+            tariffNumber={tariffNumber}
+          />
+        )}
       </View>
       <View />
     </View>

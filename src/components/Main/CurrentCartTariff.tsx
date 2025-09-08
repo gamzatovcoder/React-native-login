@@ -39,16 +39,16 @@ const CurrentCartTariff = () => {
         <Text>Error...</Text>
       ) : currentTariff ? (
         <CartTariff
+          buttonFor="viewAllTariff"
           index={indexTariff !== -1 ? indexTariff : 0}
-          handler={navigateTo}
           tarifData={currentTariff}
         />
       ) : (
         //данные создаются на основе id
         <CartTariff
+          buttonFor="viewAllTariff"
           key={tariffId}
           index={0}
-          handler={navigateTo}
           tarifData={{
             tariffNumber: tariffId.length,
             price: tariffId.length * 100,
