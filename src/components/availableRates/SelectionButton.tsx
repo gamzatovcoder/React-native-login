@@ -8,16 +8,7 @@ const SelectionButton = (tariffData: cartTariff) => {
 
   return (
     <Pressable onPress={selectTariff}>
-      <View
-        style={[
-          styles.button,
-          isLoading
-            ? styles.buttonIsLoading
-            : isSelected
-            ? styles.buttonActive
-            : null,
-        ]}
-      >
+      <View style={[styles.button, isSelected ? styles.buttonActive : null]}>
         {isLoading ? (
           <CustomLoader />
         ) : (
@@ -32,17 +23,14 @@ const SelectionButton = (tariffData: cartTariff) => {
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 9,
-    paddingHorizontal: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#0097D6',
     borderRadius: 200,
+    height: 32,
+    width: 120,
   },
 
-  buttonIsLoading: {
-    borderRadius: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-  },
   buttonText: {
     fontSize: 12,
     color: '#FFFFFF',

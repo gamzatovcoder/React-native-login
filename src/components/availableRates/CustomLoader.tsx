@@ -47,6 +47,8 @@ const CustomLoader = () => {
           style={{
             position: 'absolute',
             transform: [{ rotate: spinFast }],
+            width: 20,
+            height: 20,
           }}
           resizeMode="contain"
         />
@@ -55,6 +57,8 @@ const CustomLoader = () => {
           style={{
             position: 'absolute',
             transform: [{ rotate: spinSlow }],
+            width: 20,
+            height: 20,
           }}
           resizeMode="contain"
         />
@@ -69,8 +73,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     position: 'relative',
-    width: 48,
-    height: 48,
+    width: 20,
+    height: 20,
   },
 });
 
