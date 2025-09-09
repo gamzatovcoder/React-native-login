@@ -1,74 +1,82 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BackButtonExtension from '../components/Extensions/BackButton';
 import CartTariff from '../components/availableRates/CartTariff';
 import BackButton from '../components/availableRates/BackButton';
 import { useGetProductsQuery } from '../store/services/apiTariff';
+import { tabBar } from '../constants/styleConstants';
 
 const AvailableTariffsScreen = () => {
   const { data, isLoading, isError } = useGetProductsQuery();
 
   // я использовал бесплатное api в котором нет всех данных для карточки тарифа,
   // так что я создаю данные на основе id из полученных обьектов
-  const dataList: number[] = data
+  const dataList = data
     ?.slice(0, 4)
     .map(({ id }) => id.length)
-    .sort((a, b) => a - b);
+    .sort((a, b) => a - b)
+    .map(id => {
+      return { id: id };
+    });
+
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.wrapper}>
-      <ScrollView>
-        <SafeAreaView style={styles.SafeAreaWrapper}>
-          <View style={styles.topBlock}>
-            <View style={styles.buttonBacuWrapper}>
-              <BackButtonExtension>
-                <BackButton />
-              </BackButtonExtension>
+    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+      {isLoading ? (
+        <Text>Loading...</Text>
+      ) : isError ? (
+        <Text>Error...</Text>
+      ) : (
+        //данные создаются на основе id
+        <FlatList
+          contentContainerStyle={{
+            rowGap: 16,
+            paddingBottom: 124 - tabBar.height,
+          }}
+          ListHeaderComponent={() => (
+            <View style={styles.topBlock}>
+              <View style={styles.buttonBackWrapper}>
+                <BackButtonExtension>
+                  <BackButton />
+                </BackButtonExtension>
+              </View>
+              <Text style={styles.title}>Доступные тарифы</Text>
             </View>
-            <Text style={styles.title}>Доступные тарифы</Text>
-          </View>
-          <View style={styles.cartList}>
-            {isLoading ? (
-              <Text>Loading...</Text>
-            ) : isError ? (
-              <Text>Error...</Text>
-            ) : (
-              //данные создаются на основе id
-              dataList?.map((id, index) => {
-                return (
-                  <CartTariff
-                    buttonFor="selectTariff"
-                    key={id}
-                    index={index}
-                    tarifData={{
-                      tariffNumber: id,
-                      price: id * 100,
-                      specifications: {
-                        speed: 'Скорость до 100 Мбит/с.',
-                        repair: id % 2 === 0 ? 'Сервис PRO' : false,
-                        tv: '500+ каналов IP TV',
-                      },
-                    }}
-                  />
-                );
-              })
-            )}
-          </View>
-        </SafeAreaView>
-      </ScrollView>
+          )}
+          data={dataList}
+          keyExtractor={item => `${item.id}`}
+          renderItem={({ item, index }) => (
+            <View style={{ width: '100%', alignItems: 'center' }}>
+              <CartTariff
+                buttonFor="selectTariff"
+                key={item.id}
+                index={index}
+                tarifData={{
+                  tariffNumber: item.id,
+                  price: item.id * 100,
+                  specifications: {
+                    speed: 'Скорость до 100 Мбит/с.',
+                    repair: item.id % 2 === 0 ? 'Сервис PRO' : false,
+                    tv: '500+ каналов IP TV',
+                  },
+                }}
+              />
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     backgroundColor: '#F1F5F9',
-  },
-  SafeAreaWrapper: {
     paddingHorizontal: 16,
-    marginHorizontal: 'auto',
-    width: '100%',
   },
+
   topBlock: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -77,17 +85,12 @@ const styles = StyleSheet.create({
     marginTop: 48,
     marginBottom: 38,
   },
-  buttonBacuWrapper: {
+  buttonBackWrapper: {
     position: 'absolute',
     left: 0,
   },
   title: {
     fontSize: 16,
-  },
-  cartList: {
-    rowGap: 16,
-    alignItems: 'center',
-    marginBottom: 124,
   },
 });
 

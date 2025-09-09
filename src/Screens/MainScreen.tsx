@@ -1,5 +1,4 @@
 import { View, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
-import ButtonToMain from '../components/other/ButtonToMain';
 import RouterButton from '../components/Extensions/RouterButton';
 import ButtonToStart from '../components/other/ButtonToStart';
 import ModuleCallButton from '../components/Main/ModuleCallButton';
